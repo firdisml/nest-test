@@ -13,7 +13,7 @@ async function bootstrap() {
   app.enableCors({
     origin: [
       'https://next-auth-lime.vercel.app',
-      'https://next-auth-rnxl3w2vt-firdisml.vercel.app/',
+      'https://next-auth-rnxl3w2vt-firdisml.vercel.app',
     ],
     methods: ['GET', 'POST'],
     credentials: true,
