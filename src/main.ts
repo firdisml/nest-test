@@ -11,7 +11,7 @@ async function bootstrap() {
   await prismaService.enableShutdownHooks(app);
   app.use(cookieParser());
   app.enableCors({
-    origin: ['https://firdausismail.online'],
+    origin: ['https://www.firdausismail.online'],
     methods: ['GET', 'POST'],
     credentials: true,
   });
