@@ -6,6 +6,7 @@ export const defaultCookieOptions: CookieOptions = {
   httpOnly: true,
   secure: isProduction,
   sameSite: 'none',
+  domain: 'harsh-arithmetic-production.up.railway.app',
   path: '/',
 };
 
