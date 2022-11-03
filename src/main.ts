@@ -11,10 +11,7 @@ async function bootstrap() {
   await prismaService.enableShutdownHooks(app);
   app.use(cookieParser());
   app.enableCors({
-    origin: [
-      'https://next-auth-rnxl3w2vt-firdisml.vercel.app',
-      'http://localhost:3000',
-    ],
+    origin: ['https://firdausismail.online'],
     methods: ['GET', 'POST'],
     credentials: true,
   });

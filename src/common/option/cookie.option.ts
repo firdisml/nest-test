@@ -3,7 +3,9 @@ import { CookieOptions } from 'express';
 export const defaultCookieOptions: CookieOptions = {
   httpOnly: true,
   secure: true,
-  sameSite: 'lax',
+  sameSite: 'strict',
+  path: '/',
+  domain: 'firdausismail.online',
 };
 
 export const refreshTokenCookieOptions: CookieOptions = {
