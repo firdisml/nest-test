@@ -14,6 +14,7 @@ async function bootstrap() {
     origin: [
       'https://next-auth-lime.vercel.app',
       'https://next-auth-rnxl3w2vt-firdisml.vercel.app',
+      'http://localhost:3000',
     ],
     methods: ['GET', 'POST'],
     credentials: true,
