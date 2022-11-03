@@ -5,8 +5,8 @@ export const isProduction = true;
 export const defaultCookieOptions: CookieOptions = {
   httpOnly: true,
   secure: isProduction,
-  sameSite: 'lax',
-  domain: 'next-auth-lime.vercel.app',
+  sameSite: isProduction ? 'strict' : 'lax',
+  domain: 'harsh-arithmetic-production.up.railway.app',
   path: '/',
 };
 

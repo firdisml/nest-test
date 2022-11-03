@@ -11,7 +11,6 @@ async function bootstrap() {
   await prismaService.enableShutdownHooks(app);
   app.use(cookieParser());
   app.enableCors({
-    allowedHeaders: ['content-type'],
     origin: ['https://next-auth-lime.vercel.app'],
     methods: ['GET', 'POST'],
     credentials: true,
