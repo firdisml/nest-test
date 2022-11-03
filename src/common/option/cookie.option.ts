@@ -2,8 +2,8 @@ import { CookieOptions } from 'express';
 
 export const defaultCookieOptions: CookieOptions = {
   httpOnly: true,
-  secure: false,
-  sameSite: 'none',
+  secure: true,
+  sameSite: 'lax',
 };
 
 export const refreshTokenCookieOptions: CookieOptions = {
