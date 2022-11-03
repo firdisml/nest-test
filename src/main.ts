@@ -12,7 +12,6 @@ async function bootstrap() {
   app.use(cookieParser());
   app.enableCors({
     origin: [
-      'https://next-auth-lime.vercel.app',
       'https://next-auth-rnxl3w2vt-firdisml.vercel.app',
       'http://localhost:3000',
     ],
