@@ -4,8 +4,8 @@ export const isProduction = true;
 
 export const defaultCookieOptions: CookieOptions = {
   httpOnly: true,
-  secure: isProduction,
-  sameSite: 'strict',
+  secure: true,
+  sameSite: 'none',
   path: '/',
 };
 
