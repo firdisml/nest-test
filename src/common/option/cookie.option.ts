@@ -5,7 +5,7 @@ export const isProduction = true;
 export const defaultCookieOptions: CookieOptions = {
   httpOnly: true,
   secure: isProduction,
-  sameSite: isProduction ? 'strict' : 'lax',
+  sameSite: 'none',
   path: '/',
 };
 
