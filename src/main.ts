@@ -2,7 +2,6 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { PrismaService } from './common/prisma/prisma.service';
 import * as cookieParser from 'cookie-parser';
-import { env } from 'process';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -12,6 +11,7 @@ async function bootstrap() {
   await prismaService.enableShutdownHooks(app);
   app.use(cookieParser());
   app.enableCors({
+    allowedHeaders: ['content-type'],
     origin: ['https://next-auth-lime.vercel.app'],
     methods: ['GET', 'POST'],
     credentials: true,
