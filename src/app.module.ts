@@ -16,7 +16,7 @@ import { redisStore } from 'cache-manager-redis-store';
     AuthModule,
     PrismaModule,
     StripeModule.forRoot(
-      'sk_test_51LuzzFC3J13Tnkehs6sHdAP3GWmo0XaOSSbFnJu1D9NynmdW9y6qig5NDbeUXrKHbUwhUS0CSua0wPwlZWZNhGjF008gfZgazN',
+      '',
       { apiVersion: '2022-08-01' },
     ),
     CacheModule.registerAsync<any>({
@@ -24,10 +24,10 @@ import { redisStore } from 'cache-manager-redis-store';
       useFactory: async () => {
         const store = await redisStore({
           socket: {
-            host: 'containers-us-west-120.railway.app',
+            host: '',
             port: 7723,
           },
-          password: 'RbZt9VPSXrIfRvX2jpka',
+          password: '',
         });
         return {
           store: {
