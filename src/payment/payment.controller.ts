@@ -31,10 +31,9 @@ export class PaymentController {
   checkout(
     @AccessTokenDecorator('user_id') user_id: string,
     @AccessTokenDecorator('email') email: string,
-    @Body('product') product: string,
-    @Body('value') value: string,
+    @Body('credit') credit: string,
   ) {
-    return this.paymentService.checkout(email, user_id, product, value);
+    return this.paymentService.checkout(email, user_id, credit);
   }
 
   //Only called from stripe webhook

@@ -1,4 +1,0 @@
--- AlterTable
-ALTER TABLE "User" ALTER COLUMN "balance" SET DEFAULT 0,
-ALTER COLUMN "contact" DROP NOT NULL,
-ALTER COLUMN "refresh_token" DROP NOT NULL;

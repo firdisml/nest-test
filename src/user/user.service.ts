@@ -13,6 +13,19 @@ export class UserService {
       },
     });
 
+    console.log(user);
     return user;
+  }
+
+  async findText(search: string) {
+    const result = await this.prisma.post.findMany({
+      where: {
+        car: {
+          name: search,
+        },
+      },
+    });
+
+    return result;
   }
 }

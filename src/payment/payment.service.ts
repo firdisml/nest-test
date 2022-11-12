@@ -1,6 +1,7 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { PrismaService } from 'src/common/prisma/prisma.service';
 import { STRIPE_CLIENT } from 'src/common/option';
+import { Prisma } from '@prisma/client';
 import Stripe from 'stripe';
 
 @Injectable()
@@ -10,12 +11,7 @@ export class PaymentService {
     private prisma: PrismaService,
   ) {}
 
-  async checkout(
-    email: string,
-    user_id: string,
-    product: string,
-    value: string,
-  ) {
+  async checkout(email: string, user_id: string, credit: string) {
     //Create payment session
     const session = await this.stripe.checkout.sessions.create({
       line_items: [{ price: 'price_1LzPxhC3J13TnkehVXwawAAK', quantity: 1 }],
@@ -25,8 +21,7 @@ export class PaymentService {
       metadata: {
         email: email,
         user_id: user_id,
-        product: product,
-        value: value,
+        credit: credit,
       },
     });
     //Return checkout url for front end
@@ -38,14 +33,13 @@ export class PaymentService {
     const transaction = await this.prisma.payment.create({
       data: {
         user_id: session.metadata.user_id,
-        session_id: session.payment_intent,
-        total_payment: session.amount_total,
-        product: session.metadata.product,
-        value: parseInt(session.metadata.value),
+        stripe_id: session.payment_intent,
+        credit: parseInt(session.metadata.credit),
+        productId: '8c5d6c37-2ad1-4c62-abc2-491ed734c664',
       },
     });
     //Update user's balance in database
-    await this.balance(transaction.user_id, transaction.value);
+    await this.balance(transaction.user_id, transaction.credit);
   }
 
   async balance(user_id: string, value: number) {

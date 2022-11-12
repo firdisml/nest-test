@@ -2,7 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
 }
 
 datasource db {
@@ -10,33 +11,135 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  USER
+  ADMIN
+}
+
+enum Account {
+  INDIVIDUAL
+  COMPANY
+}
+
 model User {
-  id            String    @id @default(uuid())
-  email         String    @unique
-  password      String
-  refresh_token String?
-  created_at    DateTime  @default(now())
-  updated_at    DateTime  @updatedAt
-  balance       Int       @default(0)
-  contact       Int?
-  payments      Payment[]
-  posts         Post[]
+  id              String      @id @default(uuid())
+  email           String      @unique
+  password        String
+  refresh_token   String?
+  profile_picture String?
+  name            String
+  phone           String
+  account         Account
+  role            Role        @default(USER)
+  verified        Boolean     @default(false)
+  created_at      DateTime    @default(now())
+  updated_at      DateTime    @updatedAt
+  balance         Int         @default(0)
+  payments        Payment[]
+  posts           Post[]
+  favourites      Favourite[]
 }
 
 model Post {
+  id         String      @id @default(uuid())
+  created_at DateTime    @default(now())
+  updated_at DateTime    @updatedAt
+  visible    Boolean     @default(false)
+  verified   Boolean     @default(false)
+  address    Address?
+  car        Car?
+  favourites Favourite[]
+  user       User        @relation(fields: [user_id], references: [id])
+  user_id    String
+}
+
+model Favourite {
+  id     String  @id @default(uuid())
+  user   User?   @relation(fields: [userId], references: [id])
+  userId String?
+  post   Post?   @relation(fields: [postId], references: [id])
+  postId String?
+}
+
+model Car {
+  id       String  @id @default(uuid())
+  name     String
+  price    Decimal
+  year     String
+  type     Type?   @relation(fields: [type_id], references: [id])
+  type_id  String?
+  post     Post    @relation(fields: [post_id], references: [id])
+  post_id  String  @unique
+  brand    Brand?  @relation(fields: [brand_id], references: [id])
+  brand_id String?
+}
+
+model Type {
+  id   String @id @default(uuid())
+  name String
+  cars Car[]
+}
+
+model Brand {
+  id   String @id @default(uuid())
+  name String
+  cars Car[]
+}
+
+model Address {
+  id         String   @id @default(uuid())
+  post       Post     @relation(fields: [post_id], references: [id])
+  post_id    String   @unique
+  country    Country? @relation(fields: [country_id], references: [id])
+  country_id String?
+  postal     Postal?  @relation(fields: [postal_id], references: [id])
+  postal_id  String?
+  town       Town?    @relation(fields: [town_id], references: [id])
+  town_id    String?
+  state      State?   @relation(fields: [state_id], references: [id])
+  state_id   String?
+}
+
+model Postal {
+  id        String    @id @default(uuid())
+  name      String
+  addresses Address[]
+}
+
+model Town {
+  id        String    @id @default(uuid())
+  name      String
+  addresses Address[]
+}
+
+model State {
+  id        String    @id @default(uuid())
+  name      String
+  addresses Address[]
+}
+
+model Country {
+  id        String    @id @default(uuid())
+  name      String
+  addresses Address[]
+}
+
+model Payment {
   id         String   @id @default(uuid())
   created_at DateTime @default(now())
   user       User     @relation(fields: [user_id], references: [id])
   user_id    String
+  stripe_id  String
+  credit     Int
+  product    Product? @relation(fields: [productId], references: [id])
+  productId  String?
 }
 
-model Payment {
-  id            String   @id @default(uuid())
-  created_at    DateTime @default(now())
-  user          User     @relation(fields: [user_id], references: [id])
-  user_id       String
-  session_id    String
-  total_payment Int
-  product       String
-  value         Int
+model Product {
+  id          String    @id @default(uuid())
+  name        String
+  product_api String
+  price       Decimal
+  updated_at  DateTime  @updatedAt
+  payments    Payment[]
 }
