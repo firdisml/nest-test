@@ -7,8 +7,8 @@ import { config } from 'aws-sdk';
 async function bootstrap() {
   //AWS S3
   config.update({
-    accessKeyId: 'AKIAVMEL2X3XS25G52FG',
-    secretAccessKey: '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',
+    accessKeyId: '',
+    secretAccessKey: '',
     region: 'ap-southeast-1',
   });
 
